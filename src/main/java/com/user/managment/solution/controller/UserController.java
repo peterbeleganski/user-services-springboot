@@ -53,4 +53,10 @@ public class UserController {
         userService.deleteUser(email);
         return ResponseEntity.ok().build();
     }
+
+    @PutMapping(value = "/users/{email}")
+    public ResponseEntity<UserDTO> editUser(@PathVariable String email, @RequestBody UserDTO userDTO) throws UserNotFoundException {
+        User user = userService.editUser(email, modelMapper.map(userDTO, User.class));
+        return ResponseEntity.ok(modelMapper.map(user, UserDTO.class));
+    }
 }

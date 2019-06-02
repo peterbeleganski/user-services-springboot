@@ -54,12 +54,12 @@ public class UserService {
         userRepository.deleteById(userId);
     }
 
-    public User editUser(String id, User newUser) throws UserNotFoundException {
-        User foundUser = this.findUserById(id);
+    public User editUser(String email, User newUser) throws UserNotFoundException {
+        User foundUser = this.findByEmail(email);
 
         newUser.setId(foundUser.getId());
 
-        log.info("Updating user with id: {} data: {}", id, newUser);
+        log.info("Updating user with id: {} data: {}", newUser.getId(), newUser);
         return userRepository.save(newUser);
     }
 }
