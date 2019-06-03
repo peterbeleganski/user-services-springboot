@@ -25,7 +25,5 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	compile group: 'org.modelmapper', name: 'modelmapper', version: '0.7.5'
 
-	compileOnly 'org.projectlombok:lombok'
-	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
