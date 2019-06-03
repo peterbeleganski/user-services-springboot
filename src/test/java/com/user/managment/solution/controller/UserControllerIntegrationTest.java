@@ -55,7 +55,7 @@ public class UserControllerIntegrationTest {
     public void getAll() throws Exception {
         when(userService.findAllUsers()).thenReturn(Collections.singletonList(getUser()));
 
-        mockMvc.perform(get("/users")
+        mockMvc.perform(get("/api/users")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(1)));
@@ -67,7 +67,7 @@ public class UserControllerIntegrationTest {
         UserDTO userDTO = modelMapper.map(user, UserDTO.class);
         when(userService.saveUser(any(User.class))).thenReturn(user);
 
-        mockMvc.perform(post("/users")
+        mockMvc.perform(post("/api/users")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(userDTO)))
                 .andExpect(status().isCreated())
@@ -80,7 +80,7 @@ public class UserControllerIntegrationTest {
         UserDTO userDTO = modelMapper.map(user, UserDTO.class);
         when(userService.saveUser(any(User.class))).thenThrow(new DuplicateKeyException("User with this email exists"));
 
-        mockMvc.perform(post("/users")
+        mockMvc.perform(post("/api/users")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(userDTO)))
                 .andExpect(status().isBadRequest());
@@ -92,7 +92,7 @@ public class UserControllerIntegrationTest {
         UserDTO userDTO = modelMapper.map(user, UserDTO.class);
         when(userService.findByEmail(anyString())).thenReturn(user);
 
-        mockMvc.perform(get("/users/" + user.getEmail())
+        mockMvc.perform(get("/api/users/" + user.getEmail())
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(userDTO)))
                 .andExpect(status().isOk())
@@ -105,7 +105,7 @@ public class UserControllerIntegrationTest {
         UserDTO userDTO = modelMapper.map(user, UserDTO.class);
         when(userService.findByEmail(anyString())).thenThrow(new UserNotFoundException("User with this email does not exist"));
 
-        mockMvc.perform(get("/users/" + user.getEmail())
+        mockMvc.perform(get("/api/users/" + user.getEmail())
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(userDTO)))
                 .andExpect(status().isNotFound());
@@ -113,7 +113,7 @@ public class UserControllerIntegrationTest {
 
     @Test
     public void deleteUser() throws Exception {
-        mockMvc.perform(delete("/users/" + getUser().getEmail())
+        mockMvc.perform(delete("/api/users/" + getUser().getEmail())
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
     }
@@ -123,7 +123,7 @@ public class UserControllerIntegrationTest {
         doThrow(new UserNotFoundException("User with this email does not exist"))
         .when(userService).deleteUser(anyString());
 
-        mockMvc.perform(delete("/users/" + getUser().getEmail())
+        mockMvc.perform(delete("/api/users/" + getUser().getEmail())
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound());
     }
@@ -139,7 +139,7 @@ public class UserControllerIntegrationTest {
         User expectedUser = modelMapper.map(userDTO, User.class);
         when(userService.editUser(anyString(), any(User.class))).thenReturn(expectedUser);
 
-        mockMvc.perform(put("/users/" + user.getEmail())
+        mockMvc.perform(put("/api/users/" + user.getEmail())
                 .content(objectMapper.writeValueAsString(userDTO))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(content().json(objectMapper.writeValueAsString(userDTO)))
@@ -150,7 +150,7 @@ public class UserControllerIntegrationTest {
     public void testEditUserWithEmailNotExisting() throws Exception {
         when(userService.editUser(anyString(), any(User.class))).thenThrow(new UserNotFoundException("User does not exist"));
 
-        mockMvc.perform(put("/users/" + getUser().getEmail())
+        mockMvc.perform(put("/api/users/" + getUser().getEmail())
                 .content(objectMapper.writeValueAsString(modelMapper.map(getUser(), UserDTO.class)))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound());

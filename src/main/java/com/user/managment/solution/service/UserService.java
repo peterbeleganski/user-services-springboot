@@ -24,13 +24,6 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public User findUserById(String id) throws UserNotFoundException {
-        log.info("Fetching user with id: {} from Database", id);
-
-        return userRepository.findById(id)
-                .orElseThrow(() -> new UserNotFoundException("User with Id: " + id + " not found"));
-    }
-
     public User findByEmail(String email) throws UserNotFoundException {
         log.info("Fetching user with email: {} from Database", email);
 
