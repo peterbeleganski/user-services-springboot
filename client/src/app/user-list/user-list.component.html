@@ -1,5 +1,63 @@
 <h2>User List</h2>
 
-<div *ngFor="let user of users">
-  {{user.firstName}}
+<div>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Email</th>
+        <th>Date of Birth</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of users">
+        <td>{{user.firstName}}</td>
+        <td>{{user.lastName}}</td>
+        <td>{{user.email}}</td>
+        <td>{{user.dateOfBirth}}</td>
+        <td>
+            <button class="btn btn-sm btn-danger" (click)="deleteUser(user.email)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </div>
+
+<h2>Add new User</h2>
+<div class="row text-center">
+  <div class="col-md-4">
+      <div class="container">  
+          <div class="row">  
+              <div class="form_bg">  
+                  <form #regForm='ngForm' (ngSubmit)="createUser(regForm)" >  
+                       <h2 class="text-center">Registration page</h2>  
+                      <br/>  
+                      <div class="form-group">  
+                          <input type="text" class="form-control" placeholder="First Name" name="firstName" ngModel >   
+                      </div>  
+                      <div class="form-group">  
+                          <input type="text" class="form-control"  placeholder="Last Name" name="lastName" ngModel >  
+                      </div>  
+                      <div class="form-group">  
+                          <input type="email" class="form-control" id="email" placeholder="Email" name="email" ngModel>  
+                            
+                      </div>  
+                       <div class="form-group">  
+                      </div>  
+                      <br/>  
+                      <div class="align-center">  
+                          <button type="submit" class="btn btn-default" id="register"  >Register</button>  
+                      </div>  
+                  </form>  
+              </div>  
+          </div>  
+        </div>  
+        
+  </div>
+</div>
+
+
+
+
