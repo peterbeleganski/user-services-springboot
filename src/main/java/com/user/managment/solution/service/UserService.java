@@ -3,6 +3,8 @@ package com.user.managment.solution.service;
 import com.user.managment.solution.exception.UserNotFoundException;
 import com.user.managment.solution.model.User;
 import com.user.managment.solution.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -10,17 +12,14 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
+@Slf4j
 public class UserService {
-
-    private static final Logger log = LoggerFactory.getLogger(UserService.class);
 
     private final UserRepository userRepository;
 
-    public UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
-
     public User saveUser(User user) {
+        log.info("Saving user into db: {}", user);
         return userRepository.save(user);
     }
 

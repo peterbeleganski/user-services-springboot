@@ -2,6 +2,8 @@ package com.user.managment.solution.config;
 
 import com.user.managment.solution.model.User;
 import com.user.managment.solution.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
@@ -14,15 +16,11 @@ import java.util.List;
 
 
 @Component
+@RequiredArgsConstructor
+@Slf4j
 public class SampleDataInitializer {
 
-    private static final Logger log = LoggerFactory.getLogger(SampleDataInitializer.class);
-
     private final UserRepository userRepository;
-
-    public SampleDataInitializer(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
 
     @EventListener(ApplicationReadyEvent.class)
     public void initialize() {
